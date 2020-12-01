@@ -1,4 +1,4 @@
-﻿// Create canvas
+// Create canvas
 var c = document.createElement('canvas');
 var ctx = c.getContext('2d');
 var body = document.body;
@@ -30,25 +30,44 @@ for (var i = 0; i < board.length; i++) {
 }
 
 // Draw base board
-ctx.fillStyle = "#009393"
+ctx.fillStyle = "#009393";
 ctx.fillRect(sx, sy, boardSize, boardSize);
 
 // Draw score board
-var sbSize = { w: w * 0.2, h: h * 0.3 };
-ctx.fillStyle = "#555"
-ctx.fillRect(0, h / 2 - sbSize.h / 2, sbSize.w, sbSize.h);
+var sbSize;
+if (w > h) {
+    sbSize = { w: w * 0.2, h: h * 0.3 };
+    ctx.fillStyle = "#555";
+    ctx.fillRect(0, h / 2 - sbSize.h / 2, sbSize.w, sbSize.h);
+
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(sbSize.w * 0.3, h * 0.5 + sbSize.h * 0.22, sbSize.w * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#000";
+    ctx.beginPath();
+    ctx.arc(sbSize.w * 0.3, h * 0.5 - sbSize.h * 0.22, sbSize.w * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+}
+else {
+    sbSize = { w: boardSize * 0.95, h: h * 0.15 };
+    ctx.fillStyle = "#555";
+    ctx.fillRect(w / 2 - sbSize.w / 2, 0, sbSize.w, sbSize.h);
+
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(w / 2 + sbSize.w * 0.3, sbSize.h * 0.3, sbSize.h * 0.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#000";
+    ctx.beginPath();
+    ctx.arc(w / 2 - sbSize.w * 0.3, sbSize.h * 0.3, sbSize.h * 0.2, 0, Math.PI * 2);
+    ctx.fill();
+}
 
 
-// Draw chess for score board
-ctx.fillStyle = "#fff"
-ctx.beginPath();
-ctx.arc(sbSize.w * 0.3, h * 0.5 + sbSize.h * 0.22, sbSize.w * 0.12, 0, Math.PI * 2);
-ctx.fill();
 
-ctx.fillStyle = "#000"
-ctx.beginPath();
-ctx.arc(sbSize.w * 0.3, h * 0.5 - sbSize.h * 0.22, sbSize.w * 0.12, 0, Math.PI * 2);
-ctx.fill();
 
 // Draw lines on base board
 for (var i = 0; i < 9; i++) {
@@ -72,7 +91,7 @@ drawDot(sx + 6 * cellSize, sy + 6 * cellSize, '#000', 4);
 // Radius of chess
 var r = cellSize / 2;
 
-initialBorad();
+initialBoard();
 checkPlayablePoint(player);
 
 function clickEventHandler(event) {
@@ -87,8 +106,7 @@ function clickEventHandler(event) {
             drawChess(cx, cy, player, true);
             board[cx][cy] = player;
             flipChess(cx, cy, player);
-            drawScore('black', sbSize.w * 0.7, h * 0.5 - sbSize.h * 0.15);
-            drawScore('white', sbSize.w * 0.7, h * 0.5 + sbSize.h * 0.28);
+            refreshScore();
             let nextPlayer = player == 'white' ? 'black' : 'white';
             if (checkPlayablePoint(nextPlayer) > 0) {
                 player = nextPlayer;
@@ -101,6 +119,7 @@ function clickEventHandler(event) {
         }
     }
 }
+
 
 function drawChess(x, y, type, needDot = false) {
     drawChessHelper(sx + cellSize * (x - 1) + r, sy + cellSize * (y - 1) + r, r * 0.64, type);
@@ -170,7 +189,7 @@ function drawDot(x, y, color, r = 3) {
 }
 
 function drawScore(type, x, y) {
-    let size = w * 0.03;
+    let size = Math.max(w, h) * 0.03;
     ctx.font = size.toString() + "px Arial";
     ctx.fillStyle = '#000';
     let sc = 0;
@@ -182,6 +201,26 @@ function drawScore(type, x, y) {
         }
     }
     ctx.fillText(sc, x, y);
+}
+
+function refreshScore() {
+    if (w > h) {
+        ctx.fillStyle = "#555"
+        ctx.fillRect(sbSize.w * 0.5, h / 2 - sbSize.h / 2.2, sbSize.w * 0.4, sbSize.h * 0.9);
+    }
+    else {
+        ctx.fillStyle = "#555"
+        ctx.fillRect(w / 2 - sbSize.w * 0.4, sbSize.h * 0.6, sbSize.w * 0.8, sbSize.h * 0.35);
+    }
+
+    if (w > h) {
+        drawScore('black', sbSize.w * 0.7, h * 0.5 - sbSize.h * 0.15);
+        drawScore('white', sbSize.w * 0.7, h * 0.5 + sbSize.h * 0.28);
+    }
+    else {
+        drawScore('black', w / 2 - sbSize.w * 0.32, sbSize.h * 0.8);
+        drawScore('white', w / 2 + sbSize.w * 0.28, sbSize.h * 0.8);
+    }
 }
 
 function checkPlayablePoint(player) {
@@ -217,7 +256,7 @@ function checkPlayablePoint(player) {
     return vc;
 }
 
-function initialBorad() {
+function initialBoard() {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board.length; j++) {
             if (i == 0 || i == board.length - 1 || j == 0 || j == board.length - 1)
@@ -234,8 +273,7 @@ function initialBorad() {
     drawChess(5, 4, 'black');
     board[5][5] = 'white';
     drawChess(5, 5, 'white');
-    drawScore('black', sbSize.w * 0.7, h * 0.5 - sbSize.h * 0.15);
-    drawScore('white', sbSize.w * 0.7, h * 0.5 + sbSize.h * 0.28);
+    refreshScore();
 }
 
 function refreshScreen() {
@@ -248,6 +286,4 @@ function refreshScreen() {
             }
         }
     }
-    ctx.fillStyle = "#555"
-    ctx.fillRect(sbSize.w * 0.5, h / 2 - sbSize.h / 2.2, sbSize.w * 0.4, sbSize.h * 0.9);
 }
