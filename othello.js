@@ -102,7 +102,7 @@ function clickEventHandler(event) {
     if (cx > 0 && cx <= 8 && cy > 0 && cy <= 8) {
         if (board[cx][cy] == 'space') {
             matchLog.push({ x: cx, y: cy, player: player });
-            refreshScreen();
+            refreshBoard();
             drawChess(cx, cy, player, true);
             board[cx][cy] = player;
             flipChess(cx, cy, player);
@@ -276,7 +276,7 @@ function initialBoard() {
     refreshScore();
 }
 
-function refreshScreen() {
+function refreshBoard() {
     for (var i = 1; i < board.length - 1; i++) {
         for (var j = 1; j < board.length - 1; j++) {
             if (board[i][j] == 'space') {
