@@ -10,7 +10,7 @@ c.addEventListener('click', clickEventHandler, false);
 body.appendChild(c);
 
 // 8 ways of each chess
-const way = [
+const coordinates = [
     { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 },
     { x: -1, y: 0 }, { x: 1, y: 0 },
     { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }
@@ -160,19 +160,19 @@ function flipChess(x, y, player) {
         let fc = 0;
         let tmpX = x, tmpY = y;
         while (true) {
-            let cellType = board[tmpX + way[i].x][tmpY + way[i].y];
+            let cellType = board[tmpX + coordinates[i].x][tmpY + coordinates[i].y];
             if (cellType == 'none' || cellType == 'blank')
                 break;
             else if (cellType != player && (cellType == 'white' || cellType == 'black')) {
                 fc++;
-                tmpX += way[i].x;
-                tmpY += way[i].y;
+                tmpX += coordinates[i].x;
+                tmpY += coordinates[i].y;
             }
             else if (cellType == player) {
                 if (fc > 0) {
                     for (let j = 1; j <= fc; j++) {
-                        board[x + way[i].x * j][y + way[i].y * j] = player;
-                        drawChess(x + way[i].x * j, y + way[i].y * j, player);
+                        board[x + coordinates[i].x * j][y + coordinates[i].y * j] = player;
+                        drawChess(x + coordinates[i].x * j, y + coordinates[i].y * j, player);
                     }
                 }
                 break;
@@ -233,18 +233,18 @@ function checkPlayablePoint(player) {
                 let tmpX = i, tmpY = j;
                 let tmpC = 0;
                 while (true) {
-                    let cellType = board[tmpX + way[idx].x][tmpY + way[idx].y];
+                    let cellType = board[tmpX + coordinates[idx].x][tmpY + coordinates[idx].y];
                     if (cellType == player || cellType == 'none' || cellType == 'space')
                         break;
                     else if (cellType != player && (cellType == 'white' || cellType == 'black')) {
                         tmpC++;
-                        tmpX += way[idx].x;
-                        tmpY += way[idx].y;
+                        tmpX += coordinates[idx].x;
+                        tmpY += coordinates[idx].y;
                     }
                     else {
                         if (tmpC > 0) {
-                            board[tmpX + way[idx].x][tmpY + way[idx].y] = 'space';
-                            drawChess(tmpX + way[idx].x, tmpY + way[idx].y, 'space');
+                            board[tmpX + coordinates[idx].x][tmpY + coordinates[idx].y] = 'space';
+                            drawChess(tmpX + coordinates[idx].x, tmpY + coordinates[idx].y, 'space');
                             vc++;
                         }
                         break;
