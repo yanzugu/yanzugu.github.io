@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style2.css">
+    <title>s1063027</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <p class="title my-name"><strong>我是誰？</strong></p>
+        </div>
+    </header>
+    <main>
+        <h2 class="my-name">我是誰？ Click ↓</h2><img src="./img/whoami.jpg" width="100%" onclick="whoami(this)">
+        <table id="my-table" style="visibility: hidden;">
+            <tr>
+                <th>姓名：</th>
+                <td>古延祖</td>
+                <td rowspan="6">
+                    <img src="./img/me.jpg" width="160px">
+                </td>
+            </tr>
+            <tr>
+                <th>學號：</th>
+                <td>1063027</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>級別：</th>
+                <td>資工四甲</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>興趣：</th>
+                <td>躺著</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>擅長學科：</th>
+                <td>國文</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>座右銘：</th>
+                <td>在哪裡跌倒，就在哪裡躺好！</td>
+                <td></td>
+            </tr>
+        </table>
+    </main>
+
+    <footer>
+        <p><small>Copyright © NCYU-CSIE All Rights Reserved.</small></p>
+    </footer>
+
+    <script>
+        var table = document.getElementById('my-table');
+        var _name = document.getElementsByClassName('my-name');
+
+        function whoami(_this) {
+            table.setAttribute('style', '"visibility: visible"');
+            Array.from(_name).forEach((el) => {
+                el.innerHTML = "古延祖";
+            });
+            _this.setAttribute('width', 0);
+        }
+    </script>
+</body>
+
+</html>

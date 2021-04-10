@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(255, 235, 195);
+}
+
+h1 {
+    border: 5px solid rgba(80, 189, 80, 0.87);
+    border-radius: 45px;
+    padding: 30px;
+    background-color: rgba(78, 209, 96, 0.5);
+    color: rgba(255, 110, 0, 0.8);
+    text-align: center;
+    font-size: 50px;
+}
+
+h2 {
+    border-left: 10px rgba(0, 255, 76, 0.5) solid;
+    padding-left: 10px;
+    color: rgb(255, 153, 0);
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(77, 175, 77);
+}
+
+nav a:hover {
+    transition: 0.4s;
+    color: red;
+    background-color: rgba(223, 146, 74, 0.486);
+    padding: 12px 10px;
+}
+
+p {
+    padding-left: 20px;
+    line-height: 2;
+}
+
+dd, dt {
+    margin: 8px 0;
+}
+
+dt {
+    font-weight: bold;
+}
+
+header, footer {
+    text-align: center;
+}
+
+nav li {
+    padding: 10px;
+}
